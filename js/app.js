@@ -1,78 +1,58 @@
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
- * Define Global Variables
- * 
-*/
 
 
 
+//global variable
+let ListContainer = document.querySelector("#navbar__list");
+let sectionLen = document.getElementsByTagName('section').length;
+let sections = document.getElementsByTagName('section')
+ 
+//helper function
+function isElementInView(el){
+var rect = el.getBoundingClientRect();
+return(
+  rect.top >= 0 &&
+  rect.left >= 0 &&
+  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+  rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+);
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
 
-const navBar = document.getElementById('navbar__list');
- for(i = 1; i <=3; i++){
-    const listItem = document.createElement('li');
-    const listLink = document.createElement('a');
-    listLink.classList.add("menu__link");
-    listLink.innerText = "section" +" "+ i;
-    listItem.appendChild(listLink);
-    navBar.appendChild(listItem);
 }
 
+//element creation
+for(let i = 1; i <= sectionLen; i++){
+const listItem = document.createElement('li');
+listItem.innerHTML = `<a href = ${'#section'+i} class = "menu__link">${'Section'+" " + i}</a>`;
+ListContainer.appendChild(listItem);
+}
 
-const ToUp = document.querySelector('#toggle');
-ToUp.addEventListener('click', function(){
-   console.log(scrollTo);
-   
-    window.scrollTo({
-        top: 0,
-        left: 100,
-        behavior: 'smooth'
-      });
+//btn for topTOUp Btn 
+
+const toggle = document.getElementById('toggle');
+toggle.addEventListener('click', function(){
+ window.scrollTo({
+   top: 10,
+   left: 0,
+   behavior: "smooth",
+ })
+ console.log('clicked');
 })
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+//main function
+window.addEventListener('scroll', function(){
+for(let i = 0; i < sectionLen; i++){
+if(isElementInView(sections[i])){
+  sections[i].classList.add('my-active-class');
+  ListContainer.children[i].classList.add('my-active-menu');
+  
+}
+if(!isElementInView(sections[i])){
+  sections[i].classList.remove('my-active-class');
+  ListContainer.children[i].classList.remove('my-active-menu');
 
-// build the nav
+}
+}
+});
 
-// Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
 
 
